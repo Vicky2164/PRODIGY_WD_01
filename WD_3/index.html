@@ -1,165 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+	<title>Tic Tac Toe</title>
+	<style>
+		.game-container {
+			width: 300px;
+			margin: 40px auto;
+			text-align: center;
+		}
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+		.game-board {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
 
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-        }
+		.row {
+			display: flex;
+			justify-content: center;
+		}
 
-        nav li {
-            margin-right: 20px;
-        }
+		.cell {
+			width: 100px;
+			height: 100px;
+			border: 1px solid #ccc;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 48px;
+			cursor: pointer;
+		}
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-        }
+		.cell:hover {
+			background-color: #f0f0f0;
+		}
 
-        #home {
-            background-image: linear-gradient(to bottom, #333, #666);
-            background-size: 100% 300px;
-            background-position: 0% 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-        }
+		.game-info {
+			margin-top: 20px;
+		}
 
-        #home img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
+		#game-status {
+			font-size: 24px;
+			margin-bottom: 10px;
+		}
 
-        #about {
-            padding: 20px;
-        }
+		#reset-btn {
+			width: 100px;
+			height: 40px;
+			margin: 10px;
+			border: none;
+			border-radius: 10px;
+			background-color: #4CAF50;
+			color: #fff;
+			cursor: pointer;
+		}
 
-        #about h2 {
-            margin-top: 0;
-        }
-
-        #projects {
-            padding: 20px;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 20px;
-        }
-
-        .project {
-            background-color: #f7f7f7;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
-
-        .project img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-        }
-
-        #contact {
-            padding: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        input, textarea {
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
-
-        button[type="submit"] {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #3e8e41;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            clear: both;
-        }
-    </style>
+		#reset-btn:hover {
+			background-color: #3e8e41;
+		}
+	</style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+	<h1>Tic Tac Toe</h1>
+	<div class="game-container">
+		<div class="game-board">
+			<div class="row">
+				<div class="cell" id="cell-0"></div>
+				<div class="cell" id="cell-1"></div>
+				<div class="cell" id="cell-2"></div>
+			</div>
+			<div class="row">
+				<div class="cell" id="cell-3"></div>
+				<div class="cell" id="cell-4"></div>
+				<div class="cell" id="cell-5"></div>
+			</div>
+			<div class="row">
+				<div class="cell" id="cell-6"></div>
+				<div class="cell" id="cell-7"></div>
+				<div class="cell" id="cell-8"></div>
+			</div>
+		</div>
+		<div class="game-info">
+			<p id="game-status">Game in progress</p>
+			<button id="reset-btn">Reset Game</button>
+		</div>
+	</div>
 
-    <!-- Home Section -->
-    <section id="home">
-        <h1>Welcome to My Portfolio!</h1>
-        <img src="profile-pic.jpg" alt="Profile Picture">
-        <p>I'm a passionate web developer with a strong background in HTML, CSS, JavaScript, and more. Check out my projects and skills below!</p>
-        <button>Learn More</button>
-    </section>
+	<script>
+		let gameBoard = [];
+		let currentPlayer = "X";
+		let gameOver = false;
 
-    <!-- About Me Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>I'm a highly motivated and dedicated web developer with a strong passion for building innovative and user-friendly websites. With a background in computer science and a degree from XYZ University, I've honed my skills in HTML, CSS, JavaScript, and various frameworks and libraries.</p>
-        <h3>Education</h3>
-        <ul>
-            <li>Bachelor's Degree in Computer Science, XYZ University (2018-2022)</li>
-        </ul>
-        <h3>Professional Experience</h3>
-        <ul>
-            <li>Junior Web Developer, ABC Company (2022-Present)</li>
-            <li>Freelance Web Developer (2020-2022)</li>
-        </ul>
-    </section>
+		for (let i = 0; i < 9; i++) {
+			gameBoard.push("");
+		}
 
-    <!-- Projects Section -->
-    <section id="projects">
+		document.querySelectorAll(".cell").forEach((cell, index) => {
+			cell.addEventListener("click", () => {
+				if (!gameOver && gameBoard[index] === "") {
+					gameBoard[index] = currentPlayer;
+					cell.textContent = currentPlayer;
+					checkWin();
+					switchPlayer();
+				}
+			});
+		});
+
+		document.getElementById("reset-btn").addEventListener("click", resetGame);
+
+		function checkWin() {
+			const winConditions = [
+				[0, 1, 2],
+				[3, 4, 5],
+				[6, 7, 8],
+				[0, 3, 6],
+				[1, 4, 7],
+				[2, 5, 8],
+				[0, 4, 8],
+				[2, 4, 6]
+			];
+
+			for (let i = 0; i < winConditions.length; i++) {
+				const condition = winConditions[i];
+				if (
+					gameBoard[condition[0]] === currentPlayer &&
+					gameBoard[condition[1]] === currentPlayer &&
+					gameBoard[condition[2]] === currentPlayer
+				) {
+					gameOver = true;
+					document.getElementById("game-status").textContent = Player ${currentPlayer} wins!;
+					return;
+				}
+			}
+
+			if (!gameBoard.includes("")) {
+				gameOver = true;
+				document.getElementById("game-status").textContent = "It's a draw!";
+			}
+		}
+
+		function switchPlayer() {
+			currentPlayer = currentPlayer === "X" ? "O" : "X";
+		}
+
+		function resetGame() {
+			gameBoard = [];
+			gameOver = false;
+			currentPlayer = "X";
+			document.querySelectorAll(".cell").forEach((cell) => {
+				cell.textContent = "";
+			});
+			document.getElementById("game-status").textContent = "Game in progress";
+		}
+	</script>
+</body>
+</
